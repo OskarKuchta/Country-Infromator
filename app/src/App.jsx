@@ -26,12 +26,12 @@ const App = () => {
         <>
           <div className="result">
             <div className="left">
-            <Header>Country name</Header>
-            <Flag />
-            <Button onClick={reloadPage}>Search another!</Button>
+              <Header>Country name</Header>
+              <Flag />
             </div>
             <div className="right">
-            <Describe />
+              <Describe />
+              <Button onClick={reloadPage}>Search another!</Button>
             </div>
           </div>
         </>

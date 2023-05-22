@@ -1,6 +1,6 @@
 const Input = () => {
     return (
-        <div className="relative w-1/3 mt-3 text-gray-600 focus-within:text-gray-400">
+        <div className="relative mt-5 text-gray-600 sm:w-1/3 lg:w-1/4 focus-within:text-gray-400">
         <span className="absolute inset-y-0 left-0 flex items-center pl-2">
           <button
             type="submit"
