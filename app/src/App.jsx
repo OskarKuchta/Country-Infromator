@@ -6,6 +6,16 @@ import Button from "./components/Button";
 import Describe from "./components/Describe";
 const App = () => {
   const [search, setSearch] = useState(true);
+  const options = {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    hour12: false
+  };
+  const time = new Date().toLocaleDateString(undefined, options);
   const searchCountry = () => {
     setSearch(false);
   };
@@ -28,9 +38,21 @@ const App = () => {
             <div className="left">
               <Header>Country name</Header>
               <Flag />
+              <h2 className="mt-3 md:mt-7 font-bold text-gray-800 text-xs sm:text-sm md:text-lg">Current data on: {time}</h2>
             </div>
-            <div className="right">
-              <Describe />
+            <div className="right flex flex-col">
+              <Describe>
+              Capital: Warsaw
+              </Describe>
+              <Describe>
+              Population: 100 000 000
+              </Describe>
+              <Describe>
+              Language: Polish
+              </Describe>
+              <Describe>
+              Continent: Europe
+              </Describe>
               <Button onClick={reloadPage}>Search another!</Button>
             </div>
           </div>
