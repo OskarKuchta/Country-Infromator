@@ -24,11 +24,15 @@ body {
   align-items: center;
 }
 
-.left,
-right {
+.left {
   display: flex;
   flex-direction: column;
   margin: 0 10%;
+}
+
+.left,
+.right {
+  width: 90%;
 }
 
 @media (min-width: 769px) {

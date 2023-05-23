@@ -7,8 +7,9 @@ import Describe from "./components/Describe";
 const App = () => {
   const [value, setValue] = useState("");
   const [search, setSearch] = useState(true);
+  const [full, setFull] = useState("");
   const [capital, setCapital] = useState("");
-  const [president, setPresident] = useState("");
+  const [currency, setCurrency] = useState("");
   const [population, setPopulation] = useState("");
   const [size, setSize] = useState("");
   const [continent, setContinent] = useState("");
@@ -46,9 +47,9 @@ const App = () => {
       const nestedData = await response.json();
       const data = nestedData.data;
       console.log(data);
+      setFull(data.full_name)
       setCapital(data.capital);
-      setHours(data.href);
-      console.log(data.href)
+      setCurrency(data.currency);
       setPopulation(data.population);
       setSize(data.size);
       setContinent(data.continent);
@@ -76,15 +77,16 @@ const App = () => {
         <>
           <div className="result">
             <div className="left">
-              <Header>{value}</Header>
+              <Header>{value.substring(0, 1).toUpperCase()}{value.substring(1)}</Header>
               <Flag />
               <h2 className="mt-3 md:mt-7 font-bold text-gray-800 text-xs sm:text-sm md:text-lg">
                 Current info on: {time}
               </h2>
             </div>
             <div className="right">
+              <Describe>Full name: {full}</Describe>
               <Describe>Capital: {capital}</Describe>
-              <Describe>President: {president}</Describe>
+              <Describe>Currency: {currency}</Describe>
               <Describe>Population: {population}</Describe>
               <Describe>Size: {size}</Describe>
               <Describe>Continent: {continent}</Describe>
