@@ -7,6 +7,8 @@ import Describe from "./components/Describe";
 const App = () => {
   const [value, setValue] = useState("");
   const [search, setSearch] = useState(true);
+ 
+  const regex = /[^\w\s]/g;
   const options = {
     weekday: 'long',
     month: 'long',
@@ -21,14 +23,20 @@ const App = () => {
     setValue(event.target.value)
     console.log(value)
   }
-  const searchCountry = () => {
-    setSearch(false);
-    console.log(value)
+  const searchCountry = async() => {
+    if(value.trim() == ""){
+      alert("You forgot type country name!");
+    }
+    else if(value.match(regex)){
+      alert("Invalid format typed!")
+    }
+    else {
+    
+    }
   };
   const reloadPage = () => {
     return location.reload();
   };
-  
   return (
     <>
       {search ? (
@@ -43,9 +51,9 @@ const App = () => {
         <>
           <div className="result">
             <div className="left">
-              <Header>Country name</Header>
+              <Header>{value}</Header>
               <Flag />
-              <h2 className="mt-3 md:mt-7 font-bold text-gray-800 text-xs sm:text-sm md:text-lg">Current data on: {time}</h2>
+              <h2 className="mt-3 md:mt-7 font-bold text-gray-800 text-xs sm:text-sm md:text-lg">Current info on: {time}</h2>
             </div>
             <div className="right flex flex-col">
               <Describe>
