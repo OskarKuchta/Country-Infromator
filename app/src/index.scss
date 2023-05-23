@@ -27,6 +27,7 @@ body {
 right {
   display: flex;
   flex-direction: column;
+  margin: 0 10%;
 }
 @media (min-width: 769px) {
   .result {
