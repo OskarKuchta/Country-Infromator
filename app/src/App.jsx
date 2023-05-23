@@ -5,6 +5,7 @@ import Flag from "./components/Flags";
 import Button from "./components/Button";
 import Describe from "./components/Describe";
 const App = () => {
+  const [value, setValue] = useState("");
   const [search, setSearch] = useState(true);
   const options = {
     weekday: 'long',
@@ -16,18 +17,24 @@ const App = () => {
     hour12: false
   };
   const time = new Date().toLocaleDateString(undefined, options);
+  const getValue = (event) => {
+    setValue(event.target.value)
+    console.log(value)
+  }
   const searchCountry = () => {
     setSearch(false);
+    console.log(value)
   };
   const reloadPage = () => {
     return location.reload();
   };
+  
   return (
     <>
       {search ? (
         <div className="container">
           <Header>Search data about country!</Header>
-          <Input />
+          <Input onChange={getValue} onClick={searchCountry}/>
           <Flag />
           <Button onClick={searchCountry}>Confirm</Button>
         </div>

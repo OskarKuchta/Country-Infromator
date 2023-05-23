@@ -1,8 +1,10 @@
-const Input = () => {
+import { useState } from "react";
+const Input = ({onChange, onClick}) => {
+ 
     return (
         <div className="relative mt-5 text-gray-600 w-3/4 sm:w-1/2 lg:w-1/3 focus-within:text-gray-400">
         <span className="absolute inset-y-0 left-0 flex items-center pl-2">
-          <button
+          <button onClick={onClick}
             type="submit"
             className="p-1 focus:outline-none focus:shadow-outline"
           >
@@ -19,10 +21,12 @@ const Input = () => {
             </svg>
           </button>
         </span>
-        <input
+        <input onChange={onChange}
+
           type="search"
           name="q"
           className="w-full py-2 pl-10 text-sm text-white bg-gray-900 rounded-md focus:outline-none focus:bg-white focus:text-gray-900"
+          id="search-input"
           placeholder="Search..."
           autoComplete="off"
         />
