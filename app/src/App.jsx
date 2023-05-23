@@ -7,31 +7,36 @@ import Describe from "./components/Describe";
 const App = () => {
   const [value, setValue] = useState("");
   const [search, setSearch] = useState(true);
- 
+
   const regex = /[^\w\s]/g;
   const options = {
-    weekday: 'long',
-    month: 'long',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
-    second: 'numeric',
-    hour12: false
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    hour12: false,
   };
   const time = new Date().toLocaleDateString(undefined, options);
   const getValue = (event) => {
-    setValue(event.target.value)
-    console.log(value)
-  }
-  const searchCountry = async() => {
-    if(value.trim() == ""){
+    setValue(event.target.value);
+  };
+  const searchCountry = async () => {
+    if (value.trim() == "") {
       alert("You forgot type country name!");
-    }
-    else if(value.match(regex)){
-      alert("Invalid format typed!")
-    }
-    else {
-    
+    } else if (value.match(regex)) {
+      alert("Invalid format typed!");
+    } else {
+      const accessToken = "244|Tf5Vk9IavLcl56sLpSw15DwgxiwoonCEmv0Mz5xn";
+      const requestOptions = {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      };
+     const response = await fetch("https://restfulcountries.com/api/v1/countries/Nigeria", requestOptions);
+     const data = await response.json();
+     console.log(data)
     }
   };
   const reloadPage = () => {
@@ -42,7 +47,7 @@ const App = () => {
       {search ? (
         <div className="container">
           <Header>Search data about country!</Header>
-          <Input onChange={getValue} onClick={searchCountry}/>
+          <Input onChange={getValue} onClick={searchCountry} />
           <Flag />
           <Button onClick={searchCountry}>Confirm</Button>
         </div>
@@ -53,21 +58,15 @@ const App = () => {
             <div className="left">
               <Header>{value}</Header>
               <Flag />
-              <h2 className="mt-3 md:mt-7 font-bold text-gray-800 text-xs sm:text-sm md:text-lg">Current info on: {time}</h2>
+              <h2 className="mt-3 md:mt-7 font-bold text-gray-800 text-xs sm:text-sm md:text-lg">
+                Current info on: {time}
+              </h2>
             </div>
             <div className="right flex flex-col">
-              <Describe>
-              Capital: Warsaw
-              </Describe>
-              <Describe>
-              Population: 100 000 000
-              </Describe>
-              <Describe>
-              Language: Polish
-              </Describe>
-              <Describe>
-              Continent: Europe
-              </Describe>
+              <Describe>Capital: Warsaw</Describe>
+              <Describe>Population: 100 000 000</Describe>
+              <Describe>Language: Polish</Describe>
+              <Describe>Continent: Europe</Describe>
               <Button onClick={reloadPage}>Search another!</Button>
             </div>
           </div>
