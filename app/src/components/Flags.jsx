@@ -1,8 +1,5 @@
 const Flag = () => {
-    return (
-      <img src="https://unsplash.it/400/400/?random" 
-      className="mt-5"/>
-    )
-}
+  return <img src="./poland.png" className="mt-7" />;
+};
 
 export default Flag;

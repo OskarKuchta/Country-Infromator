@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 body {
-  background-color: #B2DFDB;
+  background-color: #b2dfdb;
   background-size: cover;
   background-attachment: fixed;
 }
@@ -27,20 +27,31 @@ body {
 .left {
   display: flex;
   flex-direction: column;
-  margin: 0 10%;
 }
 
 .left,
 .right {
-  width: 90%;
+  width: 100%;
 }
 
+img {
+  width: 500px;
+}
+
+@media (max-width: 768px) {
+  .result {
+    align-items: center;
+  }
+}
 @media (min-width: 769px) {
   .result {
     width: 90%;
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
+  }
+  .left {
+    margin-right: 10%;
   }
 }
 @media (min-width: 900px) {
