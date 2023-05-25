@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 body {
-  background-color: rgba(134, 240, 213, 0.3607843137);
+  background-color: #b2dfdb;
   background-size: cover;
   background-attachment: fixed;
 }
@@ -57,5 +57,10 @@ img {
 @media (min-width: 900px) {
   .result {
     width: 80%;
+  }
+}
+@media (orientation: landscape) {
+  #root {
+    margin-bottom: 250px;
   }
 }

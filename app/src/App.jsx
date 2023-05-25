@@ -4,7 +4,6 @@ import Input from "./components/Input";
 import Flag from "./components/Flags";
 import Button from "./components/Button";
 import Describe from "./components/Describe";
-import uniqueRandomArray from 'unique-random-array';
 const App = () => {
   const [value, setValue] = useState("");
   const [search, setSearch] = useState(true);
