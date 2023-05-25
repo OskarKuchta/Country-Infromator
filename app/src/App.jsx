@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import Input from "./components/Input";
 import Flag from "./components/Flags";
 import Button from "./components/Button";
 import Describe from "./components/Describe";
+import uniqueRandomArray from 'unique-random-array';
 const App = () => {
   const [value, setValue] = useState("");
   const [search, setSearch] = useState(true);
@@ -12,6 +13,7 @@ const App = () => {
   const [currency, setCurrency] = useState("");
   const [population, setPopulation] = useState("");
   const [size, setSize] = useState("");
+  const [currentSrc, setCurrentSrc] = useState(0);
   const [continent, setContinent] = useState("");
   const regex = /[^\w\s]/g;
   const options = {
@@ -23,6 +25,25 @@ const App = () => {
     second: "numeric",
     hour12: false,
   };
+  const flags = [
+    "./poland.png",
+    "./germany.png",
+    "./usa.png",
+    "./australia.png",
+    "./bulgaria.png",
+    "./france.png",
+  ];
+  const [src, setSrc] = useState(flags[currentSrc]);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSrc(Math.floor(Math.random() * 5));
+      setSrc(flags[currentSrc]);
+    }, 2000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [currentSrc]);
   const time = new Date().toLocaleDateString(undefined, options);
   const getValue = (event) => {
     setValue(event.target.value);
@@ -40,22 +61,21 @@ const App = () => {
         },
       };
       try {
-      const response = await fetch(
-        `https://restfulcountries.com/api/v1/countries/${value}`,
-        requestOptions
-      );
-      const nestedData = await response.json();
-      const data = nestedData.data;
-      console.log(data);
-      setFull(data.full_name)
-      setCapital(data.capital);
-      setCurrency(data.currency);
-      setPopulation(data.population);
-      setSize(data.size);
-      setContinent(data.continent);
-      setSearch(false);
-      }
-      catch {
+        const response = await fetch(
+          `https://restfulcountries.com/api/v1/countries/${value}`,
+          requestOptions
+        );
+        const nestedData = await response.json();
+        const data = nestedData.data;
+        console.log(data);
+        setFull(data.full_name);
+        setCapital(data.capital);
+        setCurrency(data.currency);
+        setPopulation(data.population);
+        setSize(data.size);
+        setContinent(data.continent);
+        setSearch(false);
+      } catch {
         alert("Wrong country name typed!");
       }
     }
@@ -69,7 +89,7 @@ const App = () => {
         <div className="container">
           <Header>Search data about country!</Header>
           <Input onChange={getValue} onClick={searchCountry} />
-          <Flag />
+          <Flag src={src} />
           <Button onClick={searchCountry}>Confirm</Button>
         </div>
       ) : null}
@@ -77,8 +97,11 @@ const App = () => {
         <>
           <div className="result">
             <div className="left">
-              <Header>{value.substring(0, 1).toUpperCase()}{value.substring(1)}</Header>
-              <Flag />
+              <Header>
+                {value.substring(0, 1).toUpperCase()}
+                {value.substring(1)}
+              </Header>
+              <Flag src={flags[0]} />
               <h2 className="mt-3 md:mt-7 font-bold text-gray-800 text-xs sm:text-sm md:text-lg">
                 Current info on: {time}
               </h2>

@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 body {
-  background-color: #b2dfdb;
+  background-color: rgba(134, 240, 213, 0.3607843137);
   background-size: cover;
   background-attachment: fixed;
 }

@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  background-color: #b2dfdb;
+  background-color: #86f0d55c;
   background-size: cover;
   background-attachment: fixed;
 }
@@ -32,7 +32,7 @@ body {
   width: 100%;
 }
 img {
-  width: 500px;
+  max-width: 500px;
 }
 @media (max-width: 768px) {
   .result {
