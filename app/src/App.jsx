@@ -14,6 +14,7 @@ const App = () => {
   const [size, setSize] = useState("");
   const [currentSrc, setCurrentSrc] = useState(0);
   const [continent, setContinent] = useState("");
+  const [resultFlag, setResultFlag] = useState("");
   const regex = /[^\w\s]/g;
   const options = {
     weekday: "long",
@@ -73,6 +74,7 @@ const App = () => {
         setPopulation(data.population);
         setSize(data.size);
         setContinent(data.continent);
+        setResultFlag(data.href.flag)
         setSearch(false);
       } catch {
         alert("Wrong country name typed!");
@@ -100,7 +102,7 @@ const App = () => {
                 {value.substring(0, 1).toUpperCase()}
                 {value.substring(1)}
               </Header>
-              <Flag src={`https://restfulcountries.com/assets/images/flags/${value}.png`}/>
+              <Flag src={resultFlag}/>
               <h2 className="mt-3 md:mt-7 font-bold text-gray-800 text-xs sm:text-sm md:text-lg">
                 Current info on: {time}
               </h2>
