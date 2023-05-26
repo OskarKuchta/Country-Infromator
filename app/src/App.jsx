@@ -100,7 +100,7 @@ const App = () => {
                 {value.substring(0, 1).toUpperCase()}
                 {value.substring(1)}
               </Header>
-              <Flag src={flags[0]} />
+              <Flag src={`https://restfulcountries.com/assets/images/flags/${value}.png`}/>
               <h2 className="mt-3 md:mt-7 font-bold text-gray-800 text-xs sm:text-sm md:text-lg">
                 Current info on: {time}
               </h2>
