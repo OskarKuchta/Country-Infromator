@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Header from "./components/Header";
 import Input from "./components/Input";
 import Flag from "./components/Flags";
@@ -15,7 +15,6 @@ const App = () => {
   const [currentSrc, setCurrentSrc] = useState(0);
   const [continent, setContinent] = useState("");
   const [resultFlag, setResultFlag] = useState("");
-  const regex = /[^\w\s]/g;
   const options = {
     weekday: "long",
     month: "long",
@@ -25,6 +24,8 @@ const App = () => {
     second: "numeric",
     hour12: false,
   };
+  const timeRef = useRef(null);
+  const regex = /[^\w\s]/g;
   const flags = [
     "./poland.png",
     "./germany.png",
@@ -44,7 +45,6 @@ const App = () => {
       clearInterval(interval);
     };
   }, [currentSrc]);
-  const time = new Date().toLocaleDateString(undefined, options);
   const getValue = (event) => {
     setValue(event.target.value);
   };
@@ -76,6 +76,7 @@ const App = () => {
         setContinent(data.continent);
         setResultFlag(data.href.flag)
         setSearch(false);
+        timeRef.current = new Date().toLocaleDateString(undefined, options);
       } catch {
         alert("Wrong country name typed!");
       }
@@ -104,7 +105,7 @@ const App = () => {
               </Header>
               <Flag src={resultFlag}/>
               <h2 className="mt-3 lg:mt-7 font-bold text-gray-800 text-xs sm:text-sm md:text-lg text-center">
-                Current info on: {time}
+                Current info on: {timeRef.current}
               </h2>
             </div>
             <div className="right">
