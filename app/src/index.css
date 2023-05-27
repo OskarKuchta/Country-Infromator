@@ -41,6 +41,10 @@ img,
   width: 500px;
 }
 
+img {
+  height: 300px;
+}
+
 @media (max-width: 769px) {
   .result {
     align-items: center;

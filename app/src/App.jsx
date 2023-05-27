@@ -38,7 +38,7 @@ const App = () => {
     const interval = setInterval(() => {
       setCurrentSrc(Math.floor(Math.random() * 5));
       setSrc(flags[currentSrc]);
-    }, 2000);
+    }, 4000);
 
     return () => {
       clearInterval(interval);
@@ -100,7 +100,7 @@ const App = () => {
             <div className="left">
               <Header>
                 {value.substring(0, 1).toUpperCase()}
-                {value.substring(1)}
+                {value.substring(1).toLowerCase()}
               </Header>
               <Flag src={resultFlag}/>
               <h2 className="mt-3 lg:mt-7 font-bold text-gray-800 text-xs sm:text-sm md:text-lg text-center">
