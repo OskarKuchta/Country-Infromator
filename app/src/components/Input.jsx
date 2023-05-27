@@ -2,7 +2,7 @@ import { useState } from "react";
 const Input = ({onChange, onClick}) => {
  
     return (
-        <div className="relative mt-5 text-gray-600 w-3/4 sm:w-1/2 lg:w-1/3 focus-within:text-gray-400">
+        <div className="relative mt-5 text-gray-600 focus-within:text-gray-400 type-country">
         <span className="absolute inset-y-0 left-0 flex items-center pl-2">
           <button onClick={onClick}
             type="submit"

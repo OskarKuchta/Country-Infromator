@@ -103,12 +103,12 @@ const App = () => {
                 {value.substring(1)}
               </Header>
               <Flag src={resultFlag}/>
-              <h2 className="mt-3 md:mt-7 font-bold text-gray-800 text-xs sm:text-sm md:text-lg">
+              <h2 className="mt-3 lg:mt-7 font-bold text-gray-800 text-xs sm:text-sm md:text-lg text-center">
                 Current info on: {time}
               </h2>
             </div>
             <div className="right">
-              <Describe>Full name: {full}</Describe>
+              <Describe className="full-name">Full name: {full}</Describe>
               <Describe>Capital: {capital}</Describe>
               <Describe>Currency: {currency}</Describe>
               <Describe>Population: {population}</Describe>
