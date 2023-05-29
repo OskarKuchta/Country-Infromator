@@ -4,6 +4,7 @@ import Input from "./components/Input";
 import Flag from "./components/Flags";
 import Button from "./components/Button";
 import Describe from "./components/Describe";
+import countriesData from "./assets/countries.json";
 const App = () => {
   const [value, setValue] = useState("");
   const [search, setSearch] = useState(true);
@@ -15,6 +16,11 @@ const App = () => {
   const [currentSrc, setCurrentSrc] = useState(0);
   const [continent, setContinent] = useState("");
   const [resultFlag, setResultFlag] = useState("");
+  const [countries, setCountries] = useState([]);
+  useEffect(() => {
+    setCountries(countriesData);
+  }, []);
+
   const options = {
     weekday: "long",
     month: "long",
@@ -67,19 +73,38 @@ const App = () => {
         );
         const nestedData = await response.json();
         const data = nestedData.data;
-        console.log(data);
         setFull(data.full_name);
         setCapital(data.capital);
         setCurrency(data.currency);
         setPopulation(data.population);
         setSize(data.size);
         setContinent(data.continent);
-        setResultFlag(data.href.flag)
+        setResultFlag(data.href.flag);
         setSearch(false);
         timeRef.current = new Date().toLocaleDateString(undefined, options);
       } catch {
-        alert("Wrong country name typed!");
+        if (value.length <= 3) {
+          alert("Country name is so short!");
+        } else {
+          try {
+            const data = countriesData;
+            const matchingKey = Object.keys(data).find((key) =>
+              key.toLowerCase().includes(value.toLowerCase())
+            );
+            const matchingValue = Object.values(data).find((val) =>
+              val.toLowerCase().includes(value.toLowerCase())
+            );
+            if (matchingKey || matchingValue) {
+              alert(`Maybe you meant about ${matchingKey || matchingValue}!`);
+            } else {
+              alert("You type wrong country name!");
+            }
+          } catch {
+            console.log((error) => error);
+          }
+        }
       }
+      /* alert("Wrong country name typed!"); */
     }
   };
   const reloadPage = () => {
@@ -103,7 +128,7 @@ const App = () => {
                 {value.substring(0, 1).toUpperCase()}
                 {value.substring(1).toLowerCase()}
               </Header>
-              <Flag src={resultFlag}/>
+              <Flag src={resultFlag} />
               <h2 className="mt-3 lg:mt-7 font-bold text-gray-800 text-xs sm:text-sm md:text-lg text-center">
                 Current info on: {timeRef.current}
               </h2>
