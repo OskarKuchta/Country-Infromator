@@ -42,7 +42,7 @@ img,
 }
 
 img {
-  height: 300px;
+  aspect-ratio: 16/9;
 }
 
 @media (max-width: 769px) {

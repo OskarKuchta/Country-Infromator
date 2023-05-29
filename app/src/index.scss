@@ -38,7 +38,7 @@ img,
   width: 500px;
 }
 img {
-  height: 300px;
+  aspect-ratio: 16 / 9;
 }
 @media (max-width: 769px) {
   .result {
@@ -67,7 +67,7 @@ img {
     width: 80%;
   }
 }
-@media (orientation: landscape){
+@media (orientation: landscape) {
   #root {
     margin-bottom: 250px;
   }
