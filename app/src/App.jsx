@@ -83,7 +83,8 @@ const App = () => {
         } else {
           try {
             const data = countriesData;
-            const matchingValue = Object.values(data).find((val) => val.toLowerCase().includes(value.toLowerCase())
+            const matchingValue = Object.values(data).find((val) =>
+              val.toLowerCase().includes(value.toLowerCase())
             );
             if (matchingValue) {
               alert(`Maybe you meant about ${matchingValue}!`);
@@ -115,8 +116,13 @@ const App = () => {
           <div className="result">
             <div className="left">
               <Header>
-                {value.substring(0, 1).toUpperCase()}
-                {value.substring(1).toLowerCase()}
+                {value
+                  .split(" ")
+                  .map(
+                    (word) =>
+                      word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+                  )
+                  .join(" ")}
               </Header>
               <Flag src={resultFlag} />
               <h2 className="mt-3 lg:mt-7 font-bold text-gray-800 text-xs sm:text-sm md:text-lg text-center">
