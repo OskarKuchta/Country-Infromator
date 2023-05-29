@@ -16,11 +16,6 @@ const App = () => {
   const [currentSrc, setCurrentSrc] = useState(0);
   const [continent, setContinent] = useState("");
   const [resultFlag, setResultFlag] = useState("");
-  const [countries, setCountries] = useState([]);
-  useEffect(() => {
-    setCountries(countriesData);
-  }, []);
-
   const options = {
     weekday: "long",
     month: "long",
@@ -83,19 +78,15 @@ const App = () => {
         setSearch(false);
         timeRef.current = new Date().toLocaleDateString(undefined, options);
       } catch {
-        if (value.length <= 3) {
+        if (value.length < 3) {
           alert("Country name is so short!");
         } else {
           try {
             const data = countriesData;
-            const matchingKey = Object.keys(data).find((key) =>
-              key.toLowerCase().includes(value.toLowerCase())
+            const matchingValue = Object.values(data).find((val) => val.toLowerCase().includes(value.toLowerCase())
             );
-            const matchingValue = Object.values(data).find((val) =>
-              val.toLowerCase().includes(value.toLowerCase())
-            );
-            if (matchingKey || matchingValue) {
-              alert(`Maybe you meant about ${matchingKey || matchingValue}!`);
+            if (matchingValue) {
+              alert(`Maybe you meant about ${matchingValue}!`);
             } else {
               alert("You type wrong country name!");
             }
@@ -104,7 +95,6 @@ const App = () => {
           }
         }
       }
-      /* alert("Wrong country name typed!"); */
     }
   };
   const reloadPage = () => {
