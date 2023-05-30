@@ -1,10 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-body {
+.bg {
   background: linear-gradient(#e7cb9c, #e3b4b4);
   background-size: cover;
-  background-attachment: fixed;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: -1;
+}
+
+body {
   height: 100vh;
 }
 
@@ -24,12 +32,6 @@ body {
   align-items: center;
 }
 
-.left {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .left,
 .right {
   width: 100%;
@@ -39,6 +41,8 @@ img,
 .type-country {
   max-width: 90%;
   width: 500px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 img {
