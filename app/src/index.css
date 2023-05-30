@@ -5,10 +5,10 @@ body {
   background: linear-gradient(#e7cb9c, #e3b4b4);
   background-size: cover;
   background-attachment: fixed;
+  height: 100vh;
 }
 
 #root {
-  height: 100vh;
   display: flex;
   justify-content: center;
   flex-direction: row;
@@ -72,7 +72,7 @@ img {
     width: 80%;
   }
 }
-@media (orientation: landscape) {
+@media (orientation: landscape) and (max-width: 768px) {
   #root {
     margin-bottom: 250px;
   }
