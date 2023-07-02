@@ -18,13 +18,21 @@ const App: React.FC = () => {
   const [resultFlag, setResultFlag] = useState<string>("");
 
   interface Options {
-    weekday: string;
-    month: string;
-    day: string;
-    hour: string;
-    minute: string;
-    second: string;
-    hour12: boolean;
+    weekday?: "long" | "short" | "narrow";
+    era?: "long" | "short" | "narrow";
+    year?: "numeric" | "2-digit";
+    month?: "numeric" | "2-digit" | "long" | "short" | "narrow";
+    day?: "numeric" | "2-digit";
+    hour?: "numeric" | "2-digit";
+    minute?: "numeric" | "2-digit";
+    second?: "numeric" | "2-digit";
+    timeZoneName?: "long" | "short";
+    hour12?: true | false;
+  }
+  interface RequestOptions {
+    headers: {
+      Authorization: string;
+    };
   }
 
   const options: Options = {
@@ -36,7 +44,7 @@ const App: React.FC = () => {
     second: "numeric",
     hour12: false,
   };
-  const timeRef = useRef<HTMLElement>(null);
+  const timeRef = useRef<string | null>(null);
   const regex: RegExp = /[^\w\s]/g;
   const flags: string[] = [
     "./poland.png",
@@ -48,7 +56,7 @@ const App: React.FC = () => {
   ];
   const [src, setSrc] = useState<string>(flags[currentSrc]);
   useEffect(() => {
-    const interval = setInterval(() => {
+    const interval: number = setInterval(() => {
       setCurrentSrc(Math.floor(Math.random() * 5));
       setSrc(flags[currentSrc]);
     }, 4000);
@@ -66,14 +74,15 @@ const App: React.FC = () => {
     } else if (value.match(regex)) {
       alert("Invalid format typed!");
     } else {
-      const accessToken = "244|Tf5Vk9IavLcl56sLpSw15DwgxiwoonCEmv0Mz5xn";
-      const requestOptions = {
+      const accessToken: string =
+        "244|Tf5Vk9IavLcl56sLpSw15DwgxiwoonCEmv0Mz5xn";
+      const requestOptions: RequestOptions = {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       };
       try {
-        const response = await fetch(
+        const response: Response = await fetch(
           `https://restfulcountries.com/api/v1/countries/${value}`,
           requestOptions
         );
@@ -89,12 +98,12 @@ const App: React.FC = () => {
         setSearch(false);
         timeRef.current = new Date().toLocaleDateString(undefined, options);
       } catch {
-        if (value.length < 3) {
+        if (value.length <= 2) {
           alert("Country name is so short!");
         } else {
           try {
-            const data = countriesData;
-            const matchingValue = Object.values(data).find((val) =>
+            const data: { [key: string]: string } = countriesData;
+            const matchingValue: string = Object.values(data).find((val) =>
               val.toLowerCase().includes(value.toLowerCase())
             );
             if (matchingValue) {
@@ -102,14 +111,14 @@ const App: React.FC = () => {
             } else {
               alert("You type wrong country name!");
             }
-          } catch {
-            console.log((error) => error);
+          } catch (error) {
+            console.log(error);
           }
         }
       }
     }
   };
-  const reloadPage = () => {
+  const reloadPage: () => void = () => {
     return location.reload();
   };
   return (
