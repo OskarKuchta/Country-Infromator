@@ -1,22 +1,33 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, ChangeEvent } from "react";
 import Header from "./components/Header";
 import Input from "./components/Input";
 import Flag from "./components/Flags";
 import Button from "./components/Button";
 import Describe from "./components/Describe";
 import countriesData from "./assets/countries.json";
-const App = () => {
-  const [value, setValue] = useState("");
-  const [search, setSearch] = useState(true);
-  const [full, setFull] = useState("");
-  const [capital, setCapital] = useState("");
-  const [currency, setCurrency] = useState("");
-  const [population, setPopulation] = useState("");
-  const [size, setSize] = useState("");
-  const [currentSrc, setCurrentSrc] = useState(0);
-  const [continent, setContinent] = useState("");
-  const [resultFlag, setResultFlag] = useState("");
-  const options = {
+const App: React.FC = () => {
+  const [value, setValue] = useState<string>("");
+  const [search, setSearch] = useState<boolean>(true);
+  const [full, setFull] = useState<string>("");
+  const [capital, setCapital] = useState<string>("");
+  const [currency, setCurrency] = useState<string>("");
+  const [population, setPopulation] = useState<string>("");
+  const [size, setSize] = useState<string>("");
+  const [currentSrc, setCurrentSrc] = useState<number>(0);
+  const [continent, setContinent] = useState<string>("");
+  const [resultFlag, setResultFlag] = useState<string>("");
+
+  interface Options {
+    weekday: string;
+    month: string;
+    day: string;
+    hour: string;
+    minute: string;
+    second: string;
+    hour12: boolean;
+  }
+
+  const options: Options = {
     weekday: "long",
     month: "long",
     day: "numeric",
@@ -25,9 +36,9 @@ const App = () => {
     second: "numeric",
     hour12: false,
   };
-  const timeRef = useRef(null);
-  const regex = /[^\w\s]/g;
-  const flags = [
+  const timeRef = useRef<HTMLElement>(null);
+  const regex: RegExp = /[^\w\s]/g;
+  const flags: string[] = [
     "./poland.png",
     "./germany.png",
     "./usa.png",
@@ -35,7 +46,7 @@ const App = () => {
     "./bulgaria.png",
     "./france.png",
   ];
-  const [src, setSrc] = useState(flags[currentSrc]);
+  const [src, setSrc] = useState<string>(flags[currentSrc]);
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSrc(Math.floor(Math.random() * 5));
@@ -46,10 +57,10 @@ const App = () => {
       clearInterval(interval);
     };
   }, [currentSrc]);
-  const getValue = (event) => {
+  const getValue = (event: ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
   };
-  const searchCountry = async () => {
+  const searchCountry: () => Promise<void> = async () => {
     if (value.trim() == "") {
       alert("You forgot type country name!");
     } else if (value.match(regex)) {
