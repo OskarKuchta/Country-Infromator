@@ -1,12 +1,15 @@
-import { useEffect, useState, useRef, ChangeEvent } from "react";
+import { useEffect, useState, useRef } from "react";
 import Header from "./components/Header";
 import Input from "./components/Input";
 import Flag from "./components/Flags";
 import Button from "./components/Button";
 import Describe from "./components/Describe";
 import countriesData from "./assets/countries.json";
+import { useInputContext } from "./context/InputContext";
+import { Options } from "./Types";
+import { RequestOptions } from "./Types";
+
 const App: React.FC = () => {
-  const [value, setValue] = useState<string>("");
   const [search, setSearch] = useState<boolean>(true);
   const [full, setFull] = useState<string>("");
   const [capital, setCapital] = useState<string>("");
@@ -16,24 +19,7 @@ const App: React.FC = () => {
   const [currentSrc, setCurrentSrc] = useState<number>(0);
   const [continent, setContinent] = useState<string>("");
   const [resultFlag, setResultFlag] = useState<string>("");
-
-  interface Options {
-    weekday?: "long" | "short" | "narrow";
-    era?: "long" | "short" | "narrow";
-    year?: "numeric" | "2-digit";
-    month?: "numeric" | "2-digit" | "long" | "short" | "narrow";
-    day?: "numeric" | "2-digit";
-    hour?: "numeric" | "2-digit";
-    minute?: "numeric" | "2-digit";
-    second?: "numeric" | "2-digit";
-    timeZoneName?: "long" | "short";
-    hour12?: true | false;
-  }
-  interface RequestOptions {
-    headers: {
-      Authorization: string;
-    };
-  }
+  const { inputValue } = useInputContext();
 
   const options: Options = {
     weekday: "long",
@@ -65,13 +51,11 @@ const App: React.FC = () => {
       clearInterval(interval);
     };
   }, [currentSrc]);
-  const getValue = (event: ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-  };
+
   const searchCountry: () => Promise<void> = async () => {
-    if (value.trim() == "") {
+    if (inputValue.trim() == "") {
       alert("You forgot type country name!");
-    } else if (value.match(regex)) {
+    } else if (inputValue.match(regex)) {
       alert("Invalid format typed!");
     } else {
       const accessToken: string =
@@ -83,7 +67,7 @@ const App: React.FC = () => {
       };
       try {
         const response: Response = await fetch(
-          `https://restfulcountries.com/api/v1/countries/${value}`,
+          `https://restfulcountries.com/api/v1/countries/${inputValue}`,
           requestOptions
         );
         const nestedData = await response.json();
@@ -98,13 +82,13 @@ const App: React.FC = () => {
         setSearch(false);
         timeRef.current = new Date().toLocaleDateString(undefined, options);
       } catch {
-        if (value.length <= 2) {
+        if (inputValue.length <= 2) {
           alert("Country name is so short!");
         } else {
           try {
             const data: { [key: string]: string } = countriesData;
             const matchingValue: string = Object.values(data).find((val) =>
-              val.toLowerCase().includes(value.toLowerCase())
+              val.toLowerCase().includes(inputValue.toLowerCase())
             );
             if (matchingValue) {
               alert(`Maybe you meant about ${matchingValue}!`);
@@ -126,7 +110,7 @@ const App: React.FC = () => {
       {search ? (
         <div className="container">
           <Header>Search data about country!</Header>
-          <Input onChange={getValue} onClick={searchCountry} />
+          <Input onClick={searchCountry} />
           <Flag src={src} />
           <Button onClick={searchCountry}>Confirm</Button>
         </div>
@@ -136,7 +120,7 @@ const App: React.FC = () => {
           <div className="result">
             <div className="left">
               <Header>
-                {value
+                {inputValue
                   .split(" ")
                   .map(
                     (word) =>

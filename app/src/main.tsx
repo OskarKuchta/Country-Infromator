@@ -1,10 +1,10 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./index.css";
-// @ts-ignore
+import { InputProvider } from "./context/InputContext";
+
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+  <InputProvider>
     <App />
-  </React.StrictMode>
+  </InputProvider>
 );

@@ -1,6 +1,4 @@
-type HeaderProps = {
-  children: React.ReactNode;
-};
+import { HeaderProps } from "../Types";
 
 const Header: React.FC<HeaderProps> = ({ children }) => {
   return (
