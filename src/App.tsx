@@ -6,7 +6,6 @@ import Button from "./components/Button";
 import Describe from "./components/Describe";
 import countriesData from "./assets/countries.json";
 import { useInputContext } from "./context/InputContext";
-import { RequestOptions } from "./Types";
 
 const App: React.FC = () => {
   const [search, setSearch] = useState<boolean>(true);
