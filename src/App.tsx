@@ -4,8 +4,8 @@ import Input from "./components/Input";
 import Flag from "./components/Flags";
 import Button from "./components/Button";
 import Describe from "./components/Describe";
-import countriesData from "./assets/countries.json";
 import { useInputContext } from "./context/InputContext";
+import { Country } from "./Types";
 
 const App: React.FC = () => {
   const [search, setSearch] = useState<boolean>(true);
@@ -50,33 +50,30 @@ const App: React.FC = () => {
           "https://country-informator.netlify.app/.netlify/functions/server/getInfo"
         );
         const nestedData = await response.json();
-        console.log(nestedData);
-        const data = nestedData.data;
-        setFull(data.full_name);
-        setCapital(data.capital);
-        setCurrency(data.currency);
+
+        const data = nestedData.find(
+          (item: Country) => item.name.common === inputValue
+        );
+        const currencies = data.currencies;
+        const currencyKeys = Object.keys(currencies);
+        const primaryCurrency =
+          currencyKeys.length > 0 ? currencyKeys[0] : null;
+        const nativeNames = data.name.nativeName;
+        const nativeNameKeys = Object.keys(nativeNames);
+        const primaryNativeName =
+          nativeNameKeys.length > 0 ? nativeNameKeys[0] : null;
+        console.log(data.name.nativeName[primaryNativeName].official);
+        setFull(data.name.nativeName[primaryNativeName].official);
+        setCapital(data.capital[0]);
+        setCurrency(primaryCurrency);
         setPopulation(data.population);
-        setSize(data.size);
-        setContinent(data.continent);
-        setResultFlag(data.href.flag);
+        setSize(data.area);
+        setContinent(data.continents[0]);
+        setResultFlag(data.flags.svg);
         setSearch(false);
       } catch {
         if (inputValue.length <= 3) {
           alert("Country name is so short!");
-        } else {
-          try {
-            const data: { [key: string]: string } = countriesData;
-            const matchingValue: string = Object.values(data).find((val) =>
-              val.toLowerCase().includes(inputValue.toLowerCase())
-            );
-            if (matchingValue) {
-              alert(`Maybe you meant about ${matchingValue}!`);
-            } else {
-              alert("You type wrong country name!");
-            }
-          } catch (error) {
-            console.log(error);
-          }
         }
       }
     }
