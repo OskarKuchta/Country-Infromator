@@ -47,9 +47,10 @@ const App: React.FC = () => {
     } else {
       try {
         const response: Response = await fetch(
-          `https://country-informator/.netlify/functions/server/getInfo`
+          "https://country-informator.netlify.app/.netlify/functions/server/getInfo"
         );
         const nestedData = await response.json();
+        console.log(nestedData);
         const data = nestedData.data;
         setFull(data.full_name);
         setCapital(data.capital);
