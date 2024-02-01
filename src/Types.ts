@@ -25,16 +25,6 @@ export interface InputContextProps {
     setInputValue: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export interface Options {
-    weekday: "long" | "short" | "narrow";
-    month: "numeric" | "2-digit" | "long" | "short" | "narrow";
-    day: "numeric" | "2-digit";
-    hour: "numeric" | "2-digit";
-    minute: "numeric" | "2-digit";
-    second: "numeric" | "2-digit";
-    hour12: true | false;
-}
-
 export interface RequestOptions {
     headers: {
         Authorization: string;

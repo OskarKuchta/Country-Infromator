@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import Input from "./components/Input";
 import Flag from "./components/Flags";
@@ -6,7 +6,6 @@ import Button from "./components/Button";
 import Describe from "./components/Describe";
 import countriesData from "./assets/countries.json";
 import { useInputContext } from "./context/InputContext";
-import { Options } from "./Types";
 import { RequestOptions } from "./Types";
 
 const App: React.FC = () => {
@@ -21,16 +20,6 @@ const App: React.FC = () => {
   const [resultFlag, setResultFlag] = useState<string>("");
   const { inputValue } = useInputContext();
 
-  const options: Options = {
-    weekday: "long",
-    month: "long",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    second: "numeric",
-    hour12: false,
-  };
-  const timeRef = useRef<string | null>(null);
   const regex: RegExp = /[^\w\s]/g;
   const flags: string[] = [
     "./poland.png",
@@ -51,24 +40,15 @@ const App: React.FC = () => {
       clearInterval(interval);
     };
   }, [currentSrc]);
-
   const searchCountry: () => Promise<void> = async () => {
     if (inputValue.trim() == "") {
       alert("You forgot type country name!");
     } else if (inputValue.match(regex)) {
       alert("Invalid format typed!");
     } else {
-      const accessToken: string =
-        "244|Tf5Vk9IavLcl56sLpSw15DwgxiwoonCEmv0Mz5xn";
-      const requestOptions: RequestOptions = {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      };
       try {
         const response: Response = await fetch(
-          `https://restfulcountries.com/api/v1/countries/${inputValue}`,
-          requestOptions
+          `https://country-informator/.netlify/functions/server/getInfo`
         );
         const nestedData = await response.json();
         const data = nestedData.data;
@@ -80,9 +60,8 @@ const App: React.FC = () => {
         setContinent(data.continent);
         setResultFlag(data.href.flag);
         setSearch(false);
-        timeRef.current = new Date().toLocaleDateString(undefined, options);
       } catch {
-        if (inputValue.length <= 2) {
+        if (inputValue.length <= 3) {
           alert("Country name is so short!");
         } else {
           try {
@@ -130,7 +109,8 @@ const App: React.FC = () => {
               </Header>
               <Flag src={resultFlag} />
               <h2 className="mt-3 lg:mt-7 font-bold text-gray-800 text-xs sm:text-sm md:text-lg text-center">
-                Current info on: {timeRef.current}
+                This is not actuall country informations. No one API's have
+                actuall data about countries.
               </h2>
             </div>
             <div className="right">
