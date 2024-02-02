@@ -1,7 +1,7 @@
 import { BsSearch, BsX } from "react-icons/bs";
 import { ChangeEvent } from "react";
-import { useInputContext } from "../context/InputContext";
-import { InputProps } from "../Types";
+import { useInputContext } from "../../context/InputContext";
+import { InputProps } from "../../Types";
 
 const Input: React.FC<InputProps> = ({ onClick }) => {
   const { inputValue, setInputValue } = useInputContext();
@@ -20,14 +20,13 @@ const Input: React.FC<InputProps> = ({ onClick }) => {
 
   return (
     <div className="relative mt-5 text-gray-600 focus-within:text-gray-400 type-country">
-      <span className="absolute inset-y-0 left-0 flex items-center pl-2">
-        <button
-          onClick={handleButtonClick}
-          className="p-1 focus:outline-none focus:shadow-outline"
-        >
-          <BsSearch />
-        </button>
-      </span>
+      <button
+        onClick={handleButtonClick}
+        className="absolute inset-y-0 left-0 flex items-center px-2 focus:outline-none focus:shadow-outline hover:bg-white focus:bg-white hover:rounded-bl focus:rounded-bl hover:rounded-tl focus:rounded-tl"
+      >
+        <BsSearch />
+      </button>
+
       <input
         onChange={getValue}
         value={inputValue}
@@ -41,7 +40,7 @@ const Input: React.FC<InputProps> = ({ onClick }) => {
         <button
           onClick={resetValue}
           type="button"
-          className="absolute inset-y-0 right-0 flex items-center pr-2 focus:outline-none focus:shadow-outline"
+          className="absolute inset-y-0 right-0 flex items-center px-2 focus:outline-none focus:shadow-outline hover:bg-white focus:bg-white hover:rounded-br focus:rounded-br hover:rounded-tr focus:rounded-tr"
         >
           <BsX />
         </button>

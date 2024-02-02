@@ -3,17 +3,9 @@ export interface ButtonProps {
     children: string;
 }
 
-export interface DescribeProps {
-    children: string[];
-    className?: string;
-};
 
 export interface FlagProps {
     src: string;
-};
-
-export interface HeaderProps {
-    children: React.ReactNode;
 };
 
 export interface InputProps {
