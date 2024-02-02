@@ -2,7 +2,17 @@ export interface ButtonProps {
     onClick: () => void;
     children: string;
 }
-
+export interface CountryContextProps {
+    search: boolean;
+    full: string;
+    capital: string;
+    currency: string;
+    population: string;
+    size: string;
+    continent: string;
+    resultFlag: string;
+    searchCountry: () => Promise<void>;
+}
 
 export interface FlagProps {
     src: string;

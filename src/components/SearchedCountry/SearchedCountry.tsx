@@ -1,10 +1,10 @@
-import { useCountryData } from "../../Hooks/useCountryData";
+import { useCountryContext } from "../../context/CountryContext";
 import Flag from "../Flags";
 import SearchedHeader from "./Header";
 
 const SearchedCountry = () => {
   const { full, capital, currency, population, size, continent, resultFlag } =
-    useCountryData();
+  useCountryContext();
 
   const reloadPage = () => {
     return location.reload();

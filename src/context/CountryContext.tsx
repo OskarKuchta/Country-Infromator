@@ -1,8 +1,16 @@
-import { useState } from "react";
-import { useInputContext } from "../context/InputContext";
-import { Country } from "../Types";
+// CountryContext.js
+import { createContext, useContext, useState, ReactNode } from "react";
+import { Country, CountryContextProps } from "../Types";
+import { useInputContext } from "./InputContext";
+import { toast } from "react-toastify";
 
-export const useCountryData = () => {
+const CountryContext = createContext<CountryContextProps | undefined>(
+  undefined
+);
+
+export const CountryProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const { inputValue } = useInputContext();
   const [search, setSearch] = useState<boolean>(true);
   const [full, setFull] = useState<string>("");
@@ -13,15 +21,17 @@ export const useCountryData = () => {
   const [continent, setContinent] = useState<string>("");
   const [resultFlag, setResultFlag] = useState<string>("");
 
+  const regex: RegExp = /[^a-zA-Z]/g;
 
-
-  const regex: RegExp = /[^\w\s]/g;
   const searchCountry = async () => {
     if (inputValue.trim() === "") {
-      alert("You forgot to type the country name!");
+      toast.error("You forgot to type the country name!");
       return;
     } else if (inputValue.match(regex)) {
-      alert("Invalid format typed!");
+      toast.error("Invalid characters in input!");
+      return;
+    } else if (inputValue.length <= 3) {
+      toast.error("Country name is too short!");
       return;
     } else {
       try {
@@ -49,21 +59,14 @@ export const useCountryData = () => {
         setSize(data.area);
         setContinent(data.continents[0]);
         setResultFlag(data.flags.svg);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        if (inputValue.length <= 3) {
-          alert("Country name is too short!");
-        } else {
-          alert("Error fetching data. Please try again later.");
-        }
-      }
-      finally {
         setSearch(false);
+      } catch {
+        toast.error("You typed incorrect name of country.");
       }
     }
   };
 
-  return {
+  const contextValue: CountryContextProps = {
     search,
     full,
     capital,
@@ -74,4 +77,18 @@ export const useCountryData = () => {
     resultFlag,
     searchCountry,
   };
+
+  return (
+    <CountryContext.Provider value={contextValue}>
+      {children}
+    </CountryContext.Provider>
+  );
+};
+
+export const useCountryContext = () => {
+  const context = useContext(CountryContext);
+  if (!context) {
+    throw new Error("useCountryContext must be used within a CountryProvider");
+  }
+  return context;
 };
