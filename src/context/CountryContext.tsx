@@ -1,4 +1,3 @@
-// CountryContext.js
 import { createContext, useContext, useState, ReactNode } from "react";
 import { Country, CountryContextProps } from "../Types";
 import { useInputContext } from "./InputContext";
@@ -21,27 +20,36 @@ export const CountryProvider: React.FC<{ children: ReactNode }> = ({
   const [continent, setContinent] = useState<string>("");
   const [resultFlag, setResultFlag] = useState<string>("");
 
-  const regex: RegExp = /[^a-zA-Z]/g;
+  const fetchData = async () => {
+    const response = await fetch(
+      "https://country-informator.netlify.app/.netlify/functions/server/getInfo"
+    );
+    const nestedData = await response.json();
+    return nestedData;
+  };
+  const fetchListOfCountries = async () => {
+    try {
+      const data = await fetchData();
+      const list = data.map((item: any) => item.name.common);
+      return list;
+    } catch {
+      console.log("Error with fetch countries");
+    }
+  };
 
   const searchCountry = async () => {
     if (inputValue.trim() === "") {
       toast.error("You forgot to type the country name!");
-      return;
-    } else if (inputValue.match(regex)) {
-      toast.error("Invalid characters in input!");
       return;
     } else if (inputValue.length <= 3) {
       toast.error("Country name is too short!");
       return;
     } else {
       try {
-        const response = await fetch(
-          "https://country-informator.netlify.app/.netlify/functions/server/getInfo"
-        );
-        const nestedData = await response.json();
-
+        const nestedData = await fetchData();
         const data = nestedData.find(
-          (item: Country) => item.name.common === inputValue
+          (item: Country) =>
+            item.name.common.toLowerCase() === inputValue.toLowerCase()
         );
         const currencies = data.currencies;
         const currencyKeys = Object.keys(currencies);
@@ -75,6 +83,7 @@ export const CountryProvider: React.FC<{ children: ReactNode }> = ({
     size,
     continent,
     resultFlag,
+    fetchListOfCountries,
     searchCountry,
   };
 

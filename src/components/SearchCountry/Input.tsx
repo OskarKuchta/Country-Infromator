@@ -1,23 +1,55 @@
 import { BsSearch, BsX } from "react-icons/bs";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useInputContext } from "../../context/InputContext";
 import { InputProps } from "../../Types";
+import { useCountryContext } from "../../context/CountryContext";
 
 const Input: React.FC<InputProps> = ({ onClick }) => {
   const { inputValue, setInputValue } = useInputContext();
+  const { fetchListOfCountries } = useCountryContext();
+  const [listCountries, setListCountries] = useState<string[] | null>([]);
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+
+  useEffect(() => {
+    const getList = async () => {
+      try {
+        const countriesList = await fetchListOfCountries();
+        setListCountries(countriesList);
+      } catch (error) {
+        console.error("Error fetching countries", error);
+      }
+    };
+
+    getList();
+  }, [fetchListOfCountries]);
+
+  const getSuggestions = (value: string) => {
+    const inputValueLowerCase = value.toLowerCase();
+    return (
+      listCountries?.filter((country) =>
+        country.toLowerCase().includes(inputValueLowerCase)
+      ) || []
+    );
+  };
 
   const getValue = (event: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
+    const value = event.target.value;
+    setInputValue(value);
+    setSuggestions(getSuggestions(value));
   };
 
   const resetValue = () => {
     setInputValue("");
+    setSuggestions([]);
   };
 
+  const handleSuggestionClick = (suggestion: string) => {
+    setInputValue(suggestion);
+    setSuggestions([]);
+  };
   const handleButtonClick = () => {
     onClick();
   };
-
   return (
     <div className="relative mt-5 text-gray-600 focus-within:text-gray-400 type-country">
       <button
@@ -36,6 +68,21 @@ const Input: React.FC<InputProps> = ({ onClick }) => {
         placeholder="Search..."
         autoComplete="off"
       />
+
+      {inputValue.length >= 2 && suggestions.length > 0 && (
+        <div className="absolute top-10 left-0 right-0 bg-white border rounded-md overflow-hidden">
+          {suggestions.map((suggestion, index) => (
+            <div
+              key={index}
+              className="p-2 cursor-pointer hover:bg-gray-200"
+              onClick={() => handleSuggestionClick(suggestion)}
+            >
+              {suggestion}
+            </div>
+          ))}
+        </div>
+      )}
+
       {inputValue.length >= 1 ? (
         <button
           onClick={resetValue}

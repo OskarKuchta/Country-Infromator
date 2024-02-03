@@ -1,7 +1,3 @@
-export interface ButtonProps {
-    onClick: () => void;
-    children: string;
-}
 export interface CountryContextProps {
     search: boolean;
     full: string;
@@ -12,6 +8,7 @@ export interface CountryContextProps {
     continent: string;
     resultFlag: string;
     searchCountry: () => Promise<void>;
+    fetchListOfCountries: () => Promise<string[]>;
 }
 
 export interface FlagProps {
