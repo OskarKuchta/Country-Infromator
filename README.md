@@ -3,11 +3,11 @@
   <a href="https://country-informator.netlify.app/">https://country-informator.netlify.app/</a>
 Some result photos down below.</h2>
 <div>
-  <img src="https://github.com/OskarKuchta/Country-Infromator/blob/main/app/public/result1.png" width="400" height="300" alt="Result photo" />
+  <img src="https://github.com/OskarKuchta/Country-Infromator/blob/main/public/result1.png?raw=true" width="400" height="300" alt="Result photo" />
   <br>
-   <img src="https://github.com/OskarKuchta/Country-Infromator/blob/main/app/public/result2.png" width="300" height="500" alt="Result photo" />
+   <img src="https://github.com/OskarKuchta/Country-Infromator/blob/main/public/result2.png?raw=true" width="300" height="500" alt="Result photo" />
   <br>
-  <img src="https://github.com/OskarKuchta/Country-Infromator/blob/main/app/public/result3.png" width="400" height="300" alt="Result photo" />
+  <img src="https://github.com/OskarKuchta/Country-Infromator/blob/main/public/result3.png?raw=true" width="400" height="300" alt="Result photo" />
   <br>
-  <img src="https://github.com/OskarKuchta/Country-Infromator/blob/main/app/public/result4.png" width="400" height="300" alt="Result photo" />
+  <img src="https://github.com/OskarKuchta/Country-Infromator/blob/main/public/result4.png?raw=true" width="400" height="300" alt="Result photo" />
 </div>
