@@ -72,13 +72,13 @@ const Input: React.FC<InputProps> = ({ onClick }) => {
       {inputValue.length >= 2 && suggestions.length > 0 && (
         <div className="absolute top-10 left-0 right-0 bg-white border rounded-md overflow-hidden">
           {suggestions.map((suggestion, index) => (
-            <div
+            <button
               key={index}
-              className="p-2 cursor-pointer hover:bg-gray-200"
+              className="w-full cursor-pointer hover:bg-gray-200 p-2 focus:outline-gray-200 focus:bg-gray-200 hover:text-black focus:text-black"
               onClick={() => handleSuggestionClick(suggestion)}
             >
               {suggestion}
-            </div>
+            </button>
           ))}
         </div>
       )}
